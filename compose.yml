@@ -2,20 +2,39 @@ version: "3"
 
 services:
   devopsdb:
-    image: ashishgourishetty/automation:db
+    image: ashishgourishetty/automation1:db
     ports:
       - "3306:3306"
     deploy:
       replicas: 3
+      resources:
+        limits:
+          cpu:"0.5"
+          memory:120M
+        reservation:
+          cpu:"0.25"
+          memory: 64M
+    volumes:
+     - dbdata: /etc/flm
     networks:
       - mynetwork
+      
 
   application:
-    image: ashishgourishetty/automation:app
+    image: ashishgourishetty/automation1:app
     ports:
       - "1111:8080"
     deploy:
       replicas: 3
+      resources:
+        limits:
+          cpu:"0.5"
+          memory:120M
+        reservation:
+          cpu:"0.25"
+          memory: 64M
+    volumes:
+        - appdata: /opt/ashish
     depends_on:
       - devopsdb
     networks:
@@ -24,3 +43,6 @@ services:
 networks:
   mynetwork:
     driver: overlay
+volumes:
+   appdata:
+   dbdata:
