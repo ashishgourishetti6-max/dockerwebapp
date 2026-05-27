@@ -6,7 +6,6 @@ services:
     ports:
       - "3306:3306"
     deploy:
-      replicas: 3
       resources:
         limits:
           cpu:"0.5"
