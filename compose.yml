@@ -17,7 +17,7 @@ services:
           memory: 64M
 
     volumes:
-      - dbdata:/etc/flm
+      - dbdata:/var/lib/mysql
 
     networks:
       - mynetwork
