@@ -3,70 +3,16 @@ version: "3.8"
 services:
 
   devopsdb:
-    image: ashishgourishetty/automation1:db
-
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: accounts
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin123
-
+    image: ashishgourishetty/automation:db
     ports:
       - "3306:3306"
-
-    volumes:
-      - dbdata:/var/lib/mysql
-
-    networks:
-      - mynetwork
-
-    deploy:
-      replicas: 1
-
-      restart_policy:
-        condition: on-failure
-
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 120M
-
-        reservations:
-          cpus: "0.25"
-          memory: 64M
-
-
-  application:
-    image: ashishgourishetty/automation1:app
-
+application:
+    image: ashishgourishetty/automation:app
     ports:
       - "1111:8080"
+    depends_on:
+      -  "devopsdb"
+    
 
-    volumes:
-      - appdata:/opt/ashish
-
-    networks:
-      - mynetwork
-
-    deploy:
-      replicas: 3
-
-      restart_policy:
-        condition: on-failure
-
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 120M
-
-        reservations:
-          cpus: "0.25"
-          memory: 64M
-
-networks:
-  mynetwork:
-    driver: overlay
-
-volumes:
-  appdata:
-  dbdata:
+     
+ 
